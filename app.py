@@ -14,6 +14,8 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.pipeline import Pipeline
 from sklearn.linear_model import LogisticRegression
 import numpy as np
+os.makedirs("/tmp/.streamlit", exist_ok=True)
+os.environ["STREAMLIT_CONFIG_DIR"] = "/tmp/.streamlit"
 
 # Initialize NLTK
 nltk.download('stopwords')
