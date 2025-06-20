@@ -1,21 +1,23 @@
 import os
 import sys
-import streamlit as st
-os.environ['STREAMLIT_HOME'] = '/tmp/.streamlit'
-os.environ['STREAMLIT_GLOBAL_DEVELOPMENT_MODE'] = 'false'
-os.environ['XDG_CONFIG_HOME'] = '/tmp/'
 os.makedirs('/tmp/.streamlit', exist_ok=True)
 
-# Disable analytics
-os.environ['STREAMLIT_BROWSER_GATHER_USAGE_STATS'] = 'false'
+# Set critical environment variables
+os.environ['STREAMLIT_HOME'] = '/tmp/.streamlit'
+os.environ['STREAMLIT_GLOBAL_DEVELOPMENT_MODE'] = 'false'
 os.environ['GATHER_USAGE_STATS'] = 'false'
+os.environ['XDG_CONFIG_HOME'] = '/tmp/'
 
-# Write minimal config file
-with open('/tmp/.streamlit/config.toml', 'w') as f:
-    f.write('[global]\n')
-    f.write('gatherUsageStats = false\n')
-    f.write('[server]\n')
-    f.write('port = 8501\n')
+# Create minimal config file
+config_path = '/tmp/.streamlit/config.toml'
+if not os.path.exists(config_path):
+    with open(config_path, 'w') as f:
+        f.write('[global]\n')
+        f.write('gatherUsageStats = false\n')
+        f.write('[server]\n')
+        f.write('port = 8501\n')
+        f.write('headless = true\n')
+import streamlit as st
 import joblib
 import pandas as pd
 import plotly.express as px
