@@ -1,6 +1,11 @@
 import os
-os.makedirs("/tmp/.streamlit", exist_ok=True)
-os.environ["STREAMLIT_CONFIG_HOME"] = "/tmp/.streamlit"
+import sys
+if "HF_HOME" in os.environ:
+    os.environ["STREAMLIT_HOME"] = os.path.join(os.environ["HF_HOME"], ".streamlit")
+    os.makedirs(os.environ["STREAMLIT_HOME"], exist_ok=True)
+    
+# Add this for any other permission issues
+sys.path.insert(0, os.path.abspath('.'))
 import streamlit as st
 import joblib
 import pandas as pd
