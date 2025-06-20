@@ -1,22 +1,24 @@
 import os
 import sys
-os.makedirs('/tmp/.streamlit', exist_ok=True)
-
-# Set critical environment variables
 os.environ['STREAMLIT_HOME'] = '/tmp/.streamlit'
 os.environ['STREAMLIT_GLOBAL_DEVELOPMENT_MODE'] = 'false'
 os.environ['GATHER_USAGE_STATS'] = 'false'
-os.environ['XDG_CONFIG_HOME'] = '/tmp/'
+
+# Create writable directory
+os.makedirs('/tmp/.streamlit', exist_ok=True)
 
 # Create minimal config file
 config_path = '/tmp/.streamlit/config.toml'
 if not os.path.exists(config_path):
     with open(config_path, 'w') as f:
+        f.write('[server]\n')
+        f.write('headless = true\n')
+        f.write('port = 8501\n')
         f.write('[global]\n')
         f.write('gatherUsageStats = false\n')
-        f.write('[server]\n')
-        f.write('port = 8501\n')
-        f.write('headless = true\n')
+
+# Prevent Streamlit from checking updates
+os.environ['NO_UPDATE_CHECK'] = 'true'
 import streamlit as st
 import joblib
 import pandas as pd
