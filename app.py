@@ -1,7 +1,6 @@
 import os
-os.environ["STREAMLIT_BROWSER_GATHER_USAGE_STATS"] = "false"
-os.environ["STREAMLIT_TELEMETRY_DISABLED"] = "1"
-
+os.makedirs("/tmp/.streamlit", exist_ok=True)
+os.environ["STREAMLIT_CONFIG_HOME"] = "/tmp/.streamlit"
 import streamlit as st
 import joblib
 import pandas as pd
