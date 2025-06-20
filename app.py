@@ -1,12 +1,21 @@
 import os
 import sys
-if "HF_HOME" in os.environ:
-    os.environ["STREAMLIT_HOME"] = os.path.join(os.environ["HF_HOME"], ".streamlit")
-    os.makedirs(os.environ["STREAMLIT_HOME"], exist_ok=True)
-    
-# Add this for any other permission issues
-sys.path.insert(0, os.path.abspath('.'))
 import streamlit as st
+os.environ['STREAMLIT_HOME'] = '/tmp/.streamlit'
+os.environ['STREAMLIT_GLOBAL_DEVELOPMENT_MODE'] = 'false'
+os.environ['XDG_CONFIG_HOME'] = '/tmp/'
+os.makedirs('/tmp/.streamlit', exist_ok=True)
+
+# Disable analytics
+os.environ['STREAMLIT_BROWSER_GATHER_USAGE_STATS'] = 'false'
+os.environ['GATHER_USAGE_STATS'] = 'false'
+
+# Write minimal config file
+with open('/tmp/.streamlit/config.toml', 'w') as f:
+    f.write('[global]\n')
+    f.write('gatherUsageStats = false\n')
+    f.write('[server]\n')
+    f.write('port = 8501\n')
 import joblib
 import pandas as pd
 import plotly.express as px
